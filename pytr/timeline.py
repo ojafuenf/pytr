@@ -127,10 +127,17 @@ class Timeline:
         """
 
         self.received_detail += 1
+        max_details_digits = len(str(self.requested_detail))
+
+        if not response["id"] in self.timeline_events:
+            self.log.error(
+                f"{self.received_detail:>{max_details_digits}}/{self.requested_detail}: "
+                + f"{response['id']} not found. Did you send/receive (or cancel) a gift?"
+            )
+            return
         event = self.timeline_events[response["id"]]
         event["details"] = response
 
-        max_details_digits = len(str(self.requested_detail))
         self.log.info(
             f"{self.received_detail:>{max_details_digits}}/{self.requested_detail}: "
             + f"{event['title']} -- {event['subtitle']} - {event['timestamp'][:19]}"
