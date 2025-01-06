@@ -30,7 +30,7 @@ class DL:
         since_timestamp: downloaded files since this date (unix timestamp)
         """
         self.tr = tr
-        self.output_path = Path(output_path)
+        self.output_path = Path(output_path).expanduser().resolve()
         self.history_file = self.output_path / history_file
         self.filename_fmt = filename_fmt
         self.since_timestamp = since_timestamp
